@@ -14,9 +14,9 @@ async function apiFetch(url, method='GET', body=null, headers={}){
         }
 
         const resposta = await fetch(url, config)
-        
+        return await resposta.json()
 
     }catch(error){
-
+        console.log(error)
     }
 }
