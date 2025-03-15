@@ -12,7 +12,7 @@
             <tr>
                 <th>Id</th>
                 <th>Nome</th>
-                <th>Email</th>
+                <th>Senha</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -23,7 +23,7 @@
                 <td>{{i.username}}</td>
                 <td>{{i.password}}</td>
                 <td>
-                    <button class = 'btn btn-success'>Editar</button>
+                    <a href = '/criarUsuario/{{i.id}}'><button class = 'btn btn-success'>Editar</button></a>  
                     <button class = 'btn btn-danger' onclick = "deletar({{i.id}})">Deletar</button>
                 </td>
             </tr>

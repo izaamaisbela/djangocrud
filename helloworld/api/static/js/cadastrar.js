@@ -1,25 +1,30 @@
 async function enviarFormulario(evento){
 
     evento.preventDefault()
-    const nome = document.getElementById("nome").value
-    const email = document.getElementById("email").value
 
-    const resposta = await fetch('/api/alunos/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ nome:nome, email:email }),
-      });
-      
-        console.log(resposta)
+    var nome = document.getElementById("nome").value
+    var senha = document.getElementById("senha").value
+    var csrf = document.querySelector("[name=csrfmiddlewaretoken]").value
+    
+    const url = window.location.pathname
+    const valor = url.split('/')
+    const id = valor[valor.length - 1]
+    let resposta;
 
-        if (resposta.ok){
-            window.location.href = "/home"
-        }else{
-            document.getElementById("mensagem").innerHTML = "Não foi possível cadastrar o usuário."
-        }
+    if(id){
+
+      resposta = await apiFetch(`/api/user/${id}`, 'PUT', {username: nome, password: senha}, {'X-CSRFToken': csrf})
+
+    }else{
+
+      resposta = await apiFetch('/api/user', 'POST', {nome: nome, senha: senha}, {'X-CSRFToken': csrf})
+
+    }
+    
+    if(resposta){
+      window.location.href = '/home'
+    }
       
 }
 
-document.getElementById("alunoForm").addEventListener("submit", enviarFormulario) 
+document.getElementById("usuarioForm").addEventListener("submit", enviarFormulario) 

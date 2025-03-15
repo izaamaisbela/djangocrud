@@ -1,4 +1,7 @@
+{%extends 'base.html'%}
 {%load static%}
+
+{%block content%}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,11 +12,25 @@
     <link rel="stylesheet" href="">
 </head>
 <body>
-    <form id="alunoForm">
-        <input type = "text" id="nome" placeholder = "Digite o nome do aluno">
-        <input type = "email" id="email" placeholder = "Digite o email do aluno">
+    <form id="usuarioForm">
 
-        <button type="submit"> Cadastrar</button>
+        {% csrf_token %}
+        <input type = "text" id="nome" placeholder = "Digite o nome do usuario" value = {%if usuarios%} {{usuarios.username}} {%endif%} >
+        <input type = "password" id="senha" placeholder = "Digite a senha do usuario" value = {%if usuarios%} {{usuarios.password}} {%endif%} >
+
+        <button type="submit"> 
+
+        {%if usuarios%}
+        
+            Editar
+        
+        {%else%}
+
+            Cadastrar
+
+        {%endif%}
+
+        </button>
     </form>
 
     <div id="mensagem"></div>
@@ -21,3 +38,5 @@
     <script src="{% static 'js/cadastrar.js'%}"></script>
 </body>
 </html>
+
+{%endblock%}
